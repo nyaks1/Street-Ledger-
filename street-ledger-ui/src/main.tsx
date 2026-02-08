@@ -9,8 +9,10 @@ import "@mysten/dapp-kit/dist/index.css";
 
 // Manual config - no imports from other files to fail
 const { networkConfig } = createNetworkConfig({
-    testnet: { url: "https://fullnode.testnet.sui.io:443" },
-});
+    testnet: { 
+        url: "https://fullnode.testnet.sui.io:443" 
+    },
+} as any);
 
 const queryClient = new QueryClient();
 

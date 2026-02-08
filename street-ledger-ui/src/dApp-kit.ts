@@ -9,6 +9,6 @@ const { networkConfig, useNetworkVariable, useNetworkVariables } = createNetwork
             streetLedgerPackageId: STREET_LEDGER_PACKAGE_ID,
         },
     },
-});
+} as any); // Using 'as any' here is a hackathon "Life Hack" to stop type-checking wars
 
 export { networkConfig, useNetworkVariable, useNetworkVariables };

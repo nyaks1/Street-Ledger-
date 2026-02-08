@@ -1,4 +1,4 @@
-import { useCurrentAccount } from "@mysten/dapp-kit-react";
+import { useCurrentAccount } from "@mysten/dapp-kit";
 import { OwnedObjects } from "./OwnedObjects";
 import {
   Card,

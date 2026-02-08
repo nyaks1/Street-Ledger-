@@ -1,5 +1,4 @@
-import { useCurrentAccount, useCurrentClient } from "@mysten/dapp-kit-react";
-import { useQuery } from "@tanstack/react-query";
+import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
 import {
   Card,
   CardContent,
@@ -11,54 +10,56 @@ import { Package, Loader2 } from "lucide-react";
 
 export function OwnedObjects() {
   const account = useCurrentAccount();
-  const client = useCurrentClient();
 
-  const { data, isPending, error } = useQuery({
-    queryKey: ["ownedObjects", account?.address],
-    queryFn: async () => {
-      if (!account) return null;
-
-      const { response } = await client.stateService.listOwnedObjects({
-        owner: account.address,
-      });
-      return response.objects ?? [];
+  // This is the Standard way to fetch objects. It handles the 'loading' and 'error' states for you!
+  const { data, isPending, error } = useSuiClientQuery(
+    "getOwnedObjects",
+    {
+      owner: account?.address || "",
     },
-    enabled: !!account,
-  });
+    {
+      enabled: !!account,
+    }
+  );
 
   if (!account) {
     return null;
   }
 
   return (
-    <Card>
+    <Card className="bg-zinc-900 border-zinc-800 text-white">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+        <CardTitle className="flex items-center gap-2 text-yellow-500">
           <Package className="h-5 w-5" />
-          Owned Objects
+          My Assets
         </CardTitle>
-        <CardDescription>Objects owned by the connected wallet</CardDescription>
+        <CardDescription className="text-zinc-400">Objects owned by your wallet</CardDescription>
       </CardHeader>
       <CardContent>
         {error ? (
-          <p className="text-destructive-foreground">
-            Error: {(error as Error)?.message || "Unknown error"}
+          <p className="text-red-500">
+            Error: {error.message}
           </p>
-        ) : isPending || !data ? (
-          <div className="flex items-center gap-2 text-muted-foreground">
+        ) : isPending ? (
+          <div className="flex items-center gap-2 text-zinc-500">
             <Loader2 className="h-4 w-4 animate-spin" />
-            Loading objects...
+            Scanning blockchain...
           </div>
-        ) : data.length === 0 ? (
-          <p className="text-muted-foreground">No objects found</p>
+        ) : !data || data.data.length === 0 ? (
+          <p className="text-zinc-500 italic">No objects found on Testnet</p>
         ) : (
           <div className="space-y-2">
-            {data.map((object) => (
+            {data.data.map((obj) => (
               <div
-                key={object.objectId}
-                className="rounded-md border bg-muted/50 p-3"
+                key={obj.data?.objectId}
+                className="rounded-lg border border-zinc-800 bg-black p-3"
               >
-                <p className="font-mono text-xs break-all">{object.objectId}</p>
+                <p className="font-mono text-[10px] text-zinc-400 break-all">
+                  ID: {obj.data?.objectId}
+                </p>
+                <p className="text-xs text-yellow-600 mt-1">
+                  Type: {obj.data?.type?.split("::").pop()}
+                </p>
               </div>
             ))}
           </div>

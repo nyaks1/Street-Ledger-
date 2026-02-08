@@ -1,4 +1,4 @@
-import { ConnectButton } from "@mysten/dapp-kit-react";
+import { ConnectButton } from "@mysten/dapp-kit";
 import { CreateDebtForm } from "./components/CreateDebtForm";
 import { WalletStatus } from "./WalletStatus";
 
