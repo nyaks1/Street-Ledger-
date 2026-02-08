@@ -4,13 +4,14 @@ import { SuiClientProvider, WalletProvider, createNetworkConfig } from "@mysten/
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App.tsx";
 
-// Ensure we use standard CSS
+// Essential CSS for the wallet button
 import "@mysten/dapp-kit/dist/index.css";
 
-// Manual config - no imports from other files to fail
+// We use 'as any' to tell TypeScript: "Trust me, I'm a developer."
+// This fixes the red lines under networkConfig and url.
 const { networkConfig } = createNetworkConfig({
     testnet: { 
-        url: "https://fullnode.testnet.sui.io:443" 
+        url: "https://sui-testnet-rpc.publicnode.com" 
     },
 } as any);
 
