@@ -74,7 +74,7 @@ export function CreateDebtForm() {
             },
             onError: (err) => alert("Blockchain says no: " + err.message)
         });
-    }; // <--- THIS WAS THE MISSING PIECE!
+    }; 
 
     return (
         <div className="p-6 bg-zinc-900 rounded-[2rem] border border-zinc-800 shadow-2xl relative overflow-hidden">

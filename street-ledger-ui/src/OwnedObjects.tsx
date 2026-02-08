@@ -152,26 +152,59 @@ export function OwnedObjects() {
               </div>
             ) : (
               mockDebts.map((debt) => (
-                <div key={debt.id} style={{ padding: '32px', backgroundColor: 'rgba(39, 39, 42, 0.2)', border: isFavorMode ? '1px solid rgba(234, 179, 8, 0.2)' : '1px solid #27272a', borderRadius: '32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div className="flex items-center gap-6">
-                    <div style={{ width: '64px', height: '64px', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: isFavorMode ? 'rgba(234, 179, 8, 0.1)' : 'rgba(37, 99, 235, 0.1)', color: isFavorMode ? '#eab308' : '#2563eb' }}>
-                        {isFavorMode ? <Zap size={28} style={{ fill: 'currentColor' }} /> : <CheckCircle2 size={28} />}
-                    </div>
-                    <div>
-                      <p style={{ fontSize: '30px', fontWeight: 900, color: 'white', letterSpacing: '-0.05em' }}>
-                        {debt.amount_owed} <span style={{ color: '#2563eb', fontSize: '16px', fontStyle: 'italic' }}>USDC</span>
-                      </p>
-                      <p style={{ color: '#71717a', fontSize: '10px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{debt.description}</p>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => handleSettle(debt.id)}
-                    style={{ backgroundColor: 'white', color: 'black', padding: '16px 32px', borderRadius: '16px', fontWeight: 900, fontSize: '12px', textTransform: 'uppercase', border: 'none', cursor: 'pointer' }}
-                  >
-                    Settle <ArrowRight size={16} style={{ marginLeft: '8px' }} />
-                  </button>
-                </div>
-              ))
+  <div key={debt.id} style={{ 
+    padding: '32px', 
+    backgroundColor: 'rgba(39, 39, 42, 0.2)', 
+    border: isFavorMode ? '1px solid rgba(234, 179, 8, 0.2)' : '1px solid #27272a', 
+    borderRadius: '32px', 
+    display: 'flex', 
+    justifyContent: 'space-between', 
+    alignItems: 'center',
+    marginBottom: '16px' // Added spacing
+  }}>
+    <div className="flex items-center gap-6">
+      <div style={{ 
+        width: '64px', 
+        height: '64px', 
+        borderRadius: '20px', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        backgroundColor: isFavorMode ? 'rgba(234, 179, 8, 0.1)' : 'rgba(34, 197, 94, 0.1)', // Changed to Green for Arc
+        color: isFavorMode ? '#eab308' : '#22c55e' 
+      }}>
+          {isFavorMode ? <Zap size={28} style={{ fill: 'currentColor' }} /> : <CheckCircle2 size={28} />}
+      </div>
+      <div>
+        <p style={{ fontSize: '30px', fontWeight: 900, color: 'white', letterSpacing: '-0.05em' }}>
+          {debt.amount_owed} <span style={{ color: '#22c55e', fontSize: '16px', fontStyle: 'italic' }}>USDC</span>
+        </p>
+        <p style={{ color: '#71717a', fontSize: '10px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{debt.description}</p>
+      </div>
+    </div>
+    
+    {/* THE ARC SETTLEMENT BUTTON */}
+    <button 
+      onClick={() => handleSettle(debt.id)}
+      style={{ 
+        backgroundColor: '#22c55e', // ARC GREEN
+        color: 'black', 
+        padding: '16px 32px', 
+        borderRadius: '16px', 
+        fontWeight: 900, 
+        fontSize: '12px', 
+        textTransform: 'uppercase', 
+        border: 'none', 
+        cursor: 'pointer',
+        boxShadow: '0 4px 14px 0 rgba(34, 197, 94, 0.39)',
+        display: 'flex',
+        alignItems: 'center'
+      }}
+    >
+      SETTLE via ARC <ArrowRight size={16} style={{ marginLeft: '8px' }} />
+    </button>
+  </div>
+))
             )
           ) : (
              /* REAL SUI RENDER */
