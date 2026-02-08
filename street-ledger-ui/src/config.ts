@@ -1,5 +1,5 @@
 // src/config.ts
-export const MOCK_MODE = true; 
+export const MOCK_MODE = false;
 
 export interface MockDebt {
     id: string;
